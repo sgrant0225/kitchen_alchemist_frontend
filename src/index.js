@@ -1,24 +1,21 @@
 
 const itemsURL = "http://localhost:3000/api/v1/items"
 
-// document.addEventListener("DOMContentLoaded", function(){
-//     fetch("http://localhost:3000/api/v1/items")
-//     .then(response => response.json())
-//     .then(data => renderItems(data));
-
-//     const renderItems = function (data) {console.log(data)}
-     
-//     // data.forEach(item => {
-//     //     console.log(item)
-//     // })
-// });
 
 
 document.addEventListener('DOMContentLoaded', () => {
     getItems()
+
+  const createItemForm = document.querySelector("#create-item-form")
+  
+  createItemForm.addEventListener("submit", (e) => {
+   createFormHandler(e)
   })
+
+})
   
   
+
   function getItems() {
     fetch(itemsURL)
       .then(res => res.json())
@@ -36,4 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
           //debugger
         })
       })
+  }
+
+  function createFormHandler(e) {
+    e.preventDefault() 
+    console.log(e)
   }

@@ -7,8 +7,32 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="root">
+   
+    <div class="form-container">
 
+        <form id="create-item-form" style="">
+          <h3>Add an Item!</h3>
+      
+          <input id='input-name' type="text" name="name" value="" placeholder="Enter item name..." class="input-text">
+          <br><br>
+          <textarea id='input-benefits' name="benefits" rows="8" cols="80" value="" placeholder="Enter item benefits..."></textarea>
+          <br><br>
+          
+      
+          <!-- <select id="categories" name="categories">
+            <option value="1">Art</option>
+            <option value="2">Tech</option>
+            <option value="3">Science</option>
+          </select>
+          <br><br> -->
+      
+          <input id= 'create-button' type="submit" name="submit" value="Create New Item" class="submit">
+        </form>
+      
+      </div>
+
+    <div id="root">
+      
     </div>
     <script src="src/index.js" charset="utf-8"></script>
 </body>

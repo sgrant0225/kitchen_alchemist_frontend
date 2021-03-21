@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
     <title>Document</title>
 </head>
 <body>
@@ -11,20 +13,20 @@
     <div class="form-container">
 
         <form id="create-item-form" style="">
-          <h3>Add an Item!</h3>
+          <h3>Lets add an Recipe!</h3>
       
-          <input id='input-name' type="text" name="name" value="" placeholder="Enter item name..." class="input-text">
+          <!-- <input id='input-name' type="text" name="name" value="" placeholder="Enter item name..." class="input-text">
           <br><br>
           <textarea id='input-benefits' name="benefits" rows="8" cols="80" value="" placeholder="Enter item benefits..."></textarea>
+          <br><br> -->
+          
+          <input id='input-title' type="text" name="title" value="" placeholder="Enter Recipe Title..." class="input-text">
+          <br><br>
+          <textarea id='input-ingredients' name="ingredients" rows="8" cols="80" value="" placeholder="Enter recipe ingredients..."></textarea>
+          <br><br>
+          <textarea id='input-recipe' name="recipe" rows="8" cols="80" value="" placeholder="Enter recipe directons..."></textarea>
           <br><br>
           
-      
-          <!-- <select id="categories" name="categories">
-            <option value="1">Art</option>
-            <option value="2">Tech</option>
-            <option value="3">Science</option>
-          </select>
-          <br><br> -->
       
           <input id= 'create-button' type="submit" name="submit" value="Create New Item" class="submit">
         </form>
@@ -35,5 +37,6 @@
       
     </div>
     <script src="src/index.js" charset="utf-8"></script>
+    <script src="src/use.js"></script>
 </body>
 </html>

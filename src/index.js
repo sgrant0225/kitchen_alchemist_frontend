@@ -1,15 +1,15 @@
 /* index.js */
 
-const itemsURL = "http://localhost:3000/api/v1/recipes"
+const recipesURL = "http://localhost:3000/api/v1/recipes"
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getItems()
+    getRecipes()
 
-  const createItemForm = document.querySelector("#create-item-form")
+  const createRecipeForm = document.querySelector("#create-recipe-form")
   
-  createItemForm.addEventListener("submit", (e) => {
+  createRecipeForm.addEventListener("submit", (e) => {
    createFormHandler(e)
   })
 
@@ -17,22 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
 
-  function getItems() {
-    fetch(itemsURL)
+  function getRecipes() {
+    fetch(recipesURL)
       .then(res => res.json())
       .then(item => {
        //JSON data is a bit nested due serializer
         item.data.forEach(i => {
           // double check how your data is nested in the console so you can successfully access the attributes of each individual object
-           console.log(i)
+          //debugger
           const itemMarkup = 
-          // <br> <h1>Kitchen Item: ${i.attributes.item_name} </h1> </br>
-          // </br> <p>Benefits: ${i.attributes.benefits} </p> </br>
           `
+          <div data-id=${i.attributes.item_id}>
           <br> <h2>Title: ${i.attributes.title}</h2> </br>
           <br> <p> Ingredients: ${i.attributes.ingredients}</p> </br>
           <br> <h3> Instructions: ${i.attributes.instructions}</h3> </br>
-          
+          <br> <p> Benefits: ${i.attributes.item.benefits} </p> </br>
+          </div>
           `;
           document.getElementById('root').innerHTML += itemMarkup
        
@@ -46,16 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function createFormHandler(e) {
     e.preventDefault() 
     
-    const TitleInput = document.querySelector("#input-title").value
+    const itemId = parseInt(document.querySelector("#item-dropdown").value)
+    const titleInput = document.querySelector("#input-title").value
     const ingredientsInput = document.querySelector("#input-ingredients").value
     const instructionsInput = document.querySelector("#input-recipe").value
-    postFetch(TitleInput, ingredientsInput, instructionsInput)
+    
+    postFetch(itemId, titleInput, ingredientsInput, instructionsInput)
    
   }
 
-  function postFetch(title, ingredients, instructions) {
+  function postFetch(item_id, title, ingredients, instructions) {
     //console.log(name, benefits, title, ingredients, instrcutions)
-    let inputData = {title, ingredients, instructions}
+    //inputData varabble is outside of my fetch 
+    let inputData = {item_id, title, ingredients, instructions}
     //debugger
     
      fetch("http://localhost:3000/api/v1/recipes", {
@@ -68,17 +71,33 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify(inputData)
       }) 
       .then(response => response.json())
-      .then(item => { console.log(item);
-    //  .then(item => {
-    //    console.log(item)
+      .then(recipe => { console.log(recipe);
+        //render JSON response
+        const itemMarkup = 
+        `
+        <div data-id=${recipe.id}>
+        <br> <h2>Title: ${recipe.title}</h2> </br>
+        <br> <p> Ingredients: ${recipe.ingredients}</p> </br>
+        <br> <h3> Instructions: ${recipe.instructions}</h3> </br>
+        
+        </div>
+
+        `;
+        document.getElementById('root').innerHTML += itemMarkup
        })
-    //  .catch((error) => {
-    //    console.error("error", error) 
-    //  }
-    //    //let newUse = new Use(item)
-      
-     // )
      
 
   }
-
+ 
+//     function render(recipe) {
+//       const itemMarkup = 
+//       `
+//       <div data-id=${i.id}>
+//       <br> <h2>Title: ${i.attributes.title}</h2> </br>
+//       <br> <p> Ingredients: ${i.attributes.ingredients}</p> </br>
+//       <br> <h3> Instructions: ${i.attributes.instructions}</h3> </br>
+//       </div>
+//       `;
+//       document.getElementById('root').innerHTML += itemMarkup
+   
+//  }

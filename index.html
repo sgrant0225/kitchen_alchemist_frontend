@@ -9,10 +9,20 @@
     <title>Document</title>
 </head>
 <body>
-   
+  
     <div class="form-container">
 
-        <form id="create-item-form" style="">
+        <form id="create-recipe-form">
+          
+          <div class="select-container">
+            <label for="select-item">Select an item in your kitchen!</label>
+            <select id="item-dropdown" name="select-item">
+                <option value="1">Avocado</option>
+                <option value="2">Olive Oil</option>
+                <option value="3">Honey</option>
+            </select></br>
+            </div>
+          
           <h3>Lets add an Recipe!</h3>
       
           <!-- <input id='input-name' type="text" name="name" value="" placeholder="Enter item name..." class="input-text">
@@ -27,16 +37,22 @@
           <textarea id='input-recipe' name="recipe" rows="8" cols="80" value="" placeholder="Enter recipe directons..."></textarea>
           <br><br>
           
-      
+          
+
           <input id= 'create-button' type="submit" name="submit" value="Create New Item" class="submit">
         </form>
+      
+      </div>
+
       
       </div>
 
     <div id="root">
       
     </div>
+    <script src="src/recipe.js" charset="utf-8"></script>
     <script src="src/index.js" charset="utf-8"></script>
-    <script src="src/use.js"></script>
 </body>
 </html>
+
+

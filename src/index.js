@@ -6,11 +6,13 @@ const recipesURL = "http://localhost:3000/api/v1/recipes"
 
 document.addEventListener('DOMContentLoaded', () => {
     getRecipes()
-
+    
   const createRecipeForm = document.querySelector("#create-recipe-form")
-  
   createRecipeForm.addEventListener("submit", (e) => {
    createFormHandler(e)
+
+  
+  //document.querySelectorAll('.delete-btn')).forEach(deleteButton => deleteButtton.addEventListener('click', deleteRecipe))
   })
 
 })
@@ -23,25 +25,21 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(item => {
        //JSON data is a bit nested due serializer
         item.data.forEach(recipe => {
-          // double check how your data is nested in the console so you can successfully access the attributes of each individual object
-          //debugger
-          render(recipe)
+          
+          //create a new instance of the Recipe class for every recipe in the database
+          let newRecipe = new Recipe(recipe, recipe.attributes)
+
+          document.getElementById('root').innerHTML += newRecipe.renderRecipeCard();
+
+          const deleteEvent = document.querySelectorAll(".delete-button")
+          .forEach((button) => button.addEventListener("click", deleteRecipe))
+
+         
       })
-      })
+    })
   }
 
-  function render(recipe) {
-    const itemMarkup = 
-    `
-    <div data-id=${recipe.id}>
-    <br> <h2>Title: ${recipe.attributes.title}</h2> </br>
-    <br> <p> Ingredients: ${recipe.attributes.ingredients}</p> </br>
-    <br> <h3> Instructions: ${recipe.attributes.instructions}</h3> </br>
-    </div>
-    `;
-    document.getElementById('root').innerHTML += itemMarkup
- 
-}
+  
 
 
   //  const itemNameInput = document.querySelector("#input-name").value
@@ -63,10 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //console.log(name, benefits, title, ingredients, instrcutions)
     //inputData varabble is outside of my fetch 
     let inputData = {item_id, title, ingredients, instructions}
-    //debugger
     
      fetch("http://localhost:3000/api/v1/recipes", {
-      // POST request
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,13 +73,26 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(recipe => { console.log(recipe);
         //render JSON response
-        
         const recipeData = recipe.data
-        render(recipeData)
+        let newRecipe = new Recipe(recipeData, recipeData.attributes)
+          
+        document.getElementById('root').innerHTML += newRecipe.renderRecipeCard();
         
        })
      
 
   }
- 
+  
+   function deleteRecipe(e) {
+     console.log("In the delete event")
+    const id = e.target.dataset.id;
+    fetch(`http://localhost:3000/api/v1/recipes/${id}`, {
+        method: "DELETE",   
+    })
+    .then(res => res.json())
+    .then( data => {
+        e.target.parentElement.remove()
+    })
+   }
     
+   

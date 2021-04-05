@@ -5,6 +5,7 @@ const recipesURL = "http://localhost:3000/api/v1/recipes"
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM is loaded")
     getRecipes()
     
   const createRecipeForm = document.querySelector("#create-recipe-form")

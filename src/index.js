@@ -8,12 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM is loaded")
     getRecipes()
     
+    // event listner and handler for create recipe form
   const createRecipeForm = document.querySelector("#create-recipe-form")
   createRecipeForm.addEventListener("submit", (e) => {
    createFormHandler(e)
-
-  
-  //document.querySelectorAll('.delete-btn')).forEach(deleteButton => deleteButtton.addEventListener('click', deleteRecipe))
   })
 
 })
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getRecipes() {
     fetch(recipesURL)
-      .then(res => res.json())
+      .then(res => res.json())  //converts JSON to an object
       .then(item => {
        //JSON data is a bit nested due serializer
         item.data.forEach(recipe => {
@@ -32,19 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
           document.getElementById('root').innerHTML += newRecipe.renderRecipeCard();
 
-          const deleteEvent = document.querySelectorAll(".delete-button")
-          .forEach((button) => button.addEventListener("click", deleteRecipe))
+          
 
          
       })
+      const deleteEvent = document.querySelectorAll(".delete-button")
+      .forEach((button) => button.addEventListener("click", deleteRecipe))
     })
   }
 
   
-
-
-  //  const itemNameInput = document.querySelector("#input-name").value
-    //  const benefitsInput = document.querySelector("#input-benefits").value 
 
   function createFormHandler(e) {
     e.preventDefault() 
@@ -55,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const instructionsInput = document.querySelector("#input-recipe").value
     
     postFetch(itemId, titleInput, ingredientsInput, instructionsInput)
+    e.target.reset();
    
   }
 
@@ -83,17 +79,29 @@ document.addEventListener('DOMContentLoaded', () => {
      
 
   }
-  
-   function deleteRecipe(e) {
-     console.log("In the delete event")
-    const id = e.target.dataset.id;
-    fetch(`http://localhost:3000/api/v1/recipes/${id}`, {
-        method: "DELETE",   
-    })
-    .then(res => res.json())
-    .then( data => {
-        e.target.parentElement.remove()
-    })
-   }
+
     
+   function deleteRecipe(e) {
+   const id = e.target.dataset.id;
+   fetch(`http://localhost:3000/api/v1/recipes/${id}`, {
+       method: "DELETE",   
+   })
+   .then(res => res.json())
+   .then( data => {
+      const deletedRecipeArray = Recipe.all.filter(recipe => recipe.id != data.id)
+            
+          document.getElementById('root').innerHTML = "";
+            deletedRecipeArray.forEach(filteredRecipe => {
+              document.getElementById('root').innerHTML += filteredRecipe.renderRecipeCard();
+            })
+      
+
+       //instead of just removing the html in line 92
+       //to delete you need to:
+        //filter the deleted recipe out of Recipe.all (by id)
+        // clear the html of all existing recipes
+        //iterate over newly filtered Recipe.all and rerender all recipes
+   })
+  }
    
+  

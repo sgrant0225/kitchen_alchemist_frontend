@@ -2,17 +2,18 @@ class Recipe {
     
      constructor(recipe, recipeAttributes) {
         
-        //let {id, name, benefits, title, ingredients, instructions} = recipe
         this.id = recipe.id;
         this.title = recipeAttributes.title;
         this.ingredients = recipeAttributes.ingredients;
         this.instructions = recipeAttributes.instructions;
         Recipe.all.push(this)
+        
     }
 
      renderRecipeCard() {
          return ` 
          <div data-id=${this.id} class="col-md-4">
+
           <div class="card mb-4 shadow-sm">
             <div class="card-body">
             <h5 class="card-title">${this.title}</h5>
@@ -20,17 +21,19 @@ class Recipe {
               <h6 class="card-text">${this.instructions}</h6> 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button data-id=${this.id} type="button" class="delete-button">Delete</button>
                   
-                </div>
-                <small class="text-muted">9 mins</small>
+                <button data-id=${this.id} type="button" onClick="window.location.reload();" class="delete-button">Delete</button>
+              </div>
+               <small class="text-muted"></small>
               </div>
             </div>
           </div>
+           
         </div>
       `;
    }
 }
+
 
 
   Recipe.all = [];
